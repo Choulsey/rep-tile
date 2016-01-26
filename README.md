@@ -8,3 +8,7 @@ Simple HTML time-saver for replicating your background tile over your entire bro
 2. Drag n Drop a background tile (PNG, JPG or GIF) from your computer into the RepTile web-page
 3. The page then auto-magically replicates the tile across the entire browser window
 4. You are now free to screengrab the browser window and paste it into your favourite graphics package
+
+#### Icon Attribution
+
+Icon made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a>

@@ -14,7 +14,7 @@ body {
     width:100%;
     height:100%;
     font: normal 16px/20px "Helvetica Neue", Helvetica, sans-serif;
-    background: rgb(237, 237, 236);
+    background: rgb(237, 237, 236) url('rep-tile-bg.png');
     margin: 0;
     padding: 0;
 }
@@ -26,19 +26,19 @@ section {
 #wrapper {
     position:absolute;
     width: 100%;
-    padding: 0px 0px 0px 0px;
+    padding: 0;
     background: transparent;
-    margin: 0px 0px 0px 0px;
+    margin: 0;
 }
 #wrapper.hover { opacity: 1; }
 
 #status {
     position:relative;
-    top:200px;
+    top:100px;
     width:300px;
     height:auto;
-    margin:0px auto;
-    padding:20px;
+    margin:0 auto;
+    padding:0 20px 10px 20px;
     color: #fff;
     background: #ccc;
     -moz-border-radius: 10px;
@@ -50,13 +50,28 @@ section {
     background: #aa3737;
 }
 #status.success {
-    background: #4eb455;
+    background: #4eb455 url('rep-tile-icon.png') center 20px no-repeat;
+    padding-top: 220px;
 }
 #status.offline {
     background: #aa3737;
 }
 #status.online {
-    background: #4eb455;
+    background: #4eb455 url('rep-tile-icon.png') center 20px no-repeat;
+    padding-top: 220px;
+}
+#status h1{
+    font-size: 2em;
+    margin: 5px;
+    padding: 0;
+}
+#status span{
+    font-size:0.8em;
+    line-height:0.8em;
+    color: #666;
+}
+#status a{
+    color: #666;
 }
 [contenteditable]:hover:not(:focus) {
     outline: 1px dotted #ccc;
@@ -85,7 +100,7 @@ if (typeof window.FileReader === 'undefined') {
   state.className = 'fail';
 } else {
   state.className = 'success';
-  state.innerHTML = 'Drag \'n\' Drop BG tile from PC <br /> (PNG, JPG, GIF)';
+  state.innerHTML = '<h1>RepTile</h1><p>Drag n Drop BG tile from PC <br/> (PNG, JPG, GIF) </p><p><span>Icon made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></span></p>';
 }
  
 theBody.ondragover = function () {
