@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8>
+
+<title>RepTile</title>
+
+<style type="text/css">
+html * {
+    width:100%;
+    height:100%;
+}
+body {
+    width:100%;
+    height:100%;
+    font: normal 16px/20px "Helvetica Neue", Helvetica, sans-serif;
+    background: rgb(237, 237, 236);
+    margin: 0;
+    padding: 0;
+}
+body.hoverEnd #wrapper { opacity: 0; }
+
+section {
+    display: block;
+}
+#wrapper {
+    position:absolute;
+    width: 100%;
+    padding: 0px 0px 0px 0px;
+    background: transparent;
+    margin: 0px 0px 0px 0px;
+}
+#wrapper.hover { opacity: 1; }
+
+#status {
+    position:relative;
+    top:200px;
+    width:300px;
+    height:auto;
+    margin:0px auto;
+    padding:20px;
+    color: #fff;
+    background: #ccc;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    text-align: center;
+}
+#status.fail {
+    background: #aa3737;
+}
+#status.success {
+    background: #4eb455;
+}
+#status.offline {
+    background: #aa3737;
+}
+#status.online {
+    background: #4eb455;
+}
+[contenteditable]:hover:not(:focus) {
+    outline: 1px dotted #ccc;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<section id="wrapper">
+
+<article>
+  
+  <p id="status">Oh dear, your browser doesn't support HTML5.</p>
+  
+</article>
+
+<script>
+var popUP = document.getElementById('wrapper'),
+    state = document.getElementById('status'),
+    theBody = document.body;
+
+if (typeof window.FileReader === 'undefined') {
+  state.className = 'fail';
+} else {
+  state.className = 'success';
+  state.innerHTML = 'Drag \'n\' Drop BG tile from PC <br /> (PNG, JPG, GIF)';
+}
+ 
+theBody.ondragover = function () {
+    popUP.className = 'hover';
+    return false;
+};
+
+theBody.ondragend = function () {
+    this.className = 'hoverEnd';
+    return false;
+};
+
+theBody.ondrop = function (e) {
+  this.className = '';
+  this.className = 'hoverEnd';
+  e.preventDefault();
+
+  var file = e.dataTransfer.files[0],
+      reader = new FileReader();
+  reader.onload = function (event) {
+    theBody.style.background = 'url(' + event.target.result + ') top left repeat';
+  };
+  reader.readAsDataURL(file);
+
+  return false;
+};
+
+</script>
+
+</section>
+
+</body>
+</html>
