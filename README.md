@@ -9,7 +9,9 @@ Simple HTML time-saver for replicating your background tile over your entire bro
 3. The page then auto-magically replicates the tile across the entire browser window
 4. You are now free to screengrab the browser window and paste it into your favourite graphics package
 
-Live Demo [http://choulsey.github.io]
+<a href="http://choulsey.github.io">Live Demo</a>
+
+---
 
 #### Icon Attribution
 
