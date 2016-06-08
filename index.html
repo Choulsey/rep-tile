@@ -20,6 +20,16 @@ body {
 }
 body.hoverEnd #wrapper { opacity: 0; }
 
+#background-container {
+    width:100%;
+    height:100%;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    overflow: hidden;
+    display:none;
+}
+
 section {
     display: block;
 }
@@ -34,7 +44,7 @@ section {
 
 #status {
     position:relative;
-    top:100px;
+    top:50px;
     width:300px;
     height:auto;
     margin:0 auto;
@@ -65,7 +75,7 @@ section {
     margin: 5px;
     padding: 0;
 }
-#status span{
+#status span, #settings span{
     font-size:0.8em;
     line-height:0.8em;
     color: #666;
@@ -77,27 +87,86 @@ section {
     outline: 1px dotted #ccc;
 }
 
+#settings {
+    position:relative;
+    top:70px;
+    width:300px;
+    height:auto;
+    margin:0 auto;
+    padding:1px 20px 15px 20px;
+    color: #fff;
+    background: #4eb455;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#bg-color {
+    width: 30%;
+    border: 0;
+    padding:3px 5px;
+    margin: 10px 0 10px 0;
+}
+
+hr {
+    background: none;
+    border: 1px dashed #338f39;
+    margin: 10px 0 15px 0;
+}
+
 </style>
 
 </head>
 
 <body>
 
+<div id="background-container"></div>
+
 <section id="wrapper">
 
 <article>
   
-  <p id="status">Oh dear, your browser doesn't support HTML5.</p>
+    <div id="status">
+        <p>Oh dear, your browser doesn't support HTML5.</p>
+    </div>
+
+    <div id="settings">
+
+        <h2>RepTile Settings</h2>
+
+        <hr/>
+
+        <label for="fader">BG Opacity:</label>
+        <output for="fader" id="volume">100%</output>
+        <input type="range" min="0" max="100" value="100" id="fader"
+               step="1" oninput="outputUpdate(value)">
+
+        <hr/>
+
+        <label for="bg-color">BG Colour:</label><br/>
+        <input type="text" value="#fff" id="bg-color" />
+
+        <hr/>
+
+        <span>NB: Settings applied once tile is dragged.</span>
+
+    </div>
   
 </article>
 
 <script>
 var popUP = document.getElementById('wrapper'),
     state = document.getElementById('status'),
-    theBody = document.body;
+    settingsContainer = document.getElementById('settings'),
+    theBody = document.body,
+    theBackgroundContainer = document.getElementById('background-container'),
+    opacityOfBG = 1,
+    colorOfBody = '#fff';
 
 if (typeof window.FileReader === 'undefined') {
   state.className = 'fail';
+    settingsContainer.style.display = 'none';
 } else {
   state.className = 'success';
   state.innerHTML = '<h1>RepTile</h1><p>Drag n Drop BG tile from PC <br/> (PNG, JPG, GIF) </p><p><span>Icon made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></span></p>';
@@ -118,15 +187,39 @@ theBody.ondrop = function (e) {
   this.className = 'hoverEnd';
   e.preventDefault();
 
+    colorOfBody = document.querySelector('#bg-color').value;
+    settingsContainer.style.display = 'none';
+
   var file = e.dataTransfer.files[0],
       reader = new FileReader();
   reader.onload = function (event) {
-    theBody.style.background = 'url(' + event.target.result + ') top left repeat';
+      //theBody.style.background = 'url(' + event.target.result + ') top left repeat';
+      //theBackgroundContainer.setAttribute("data-attr", 'url(' + event.target.result + ')');
+
+      theBody.style.background = colorOfBody;
+      document.styleSheets[0].addRule('#background-container:after','background-image: url(' + event.target.result + ');');
+      document.styleSheets[0].addRule('#background-container:after','content: " ";');
+      document.styleSheets[0].addRule('#background-container:after','display: block;');
+      document.styleSheets[0].addRule('#background-container:after','position: absolute;');
+      document.styleSheets[0].addRule('#background-container:after','left: 0;');
+      document.styleSheets[0].addRule('#background-container:after','top: 0;');
+      document.styleSheets[0].addRule('#background-container:after','width: 100%;');
+      document.styleSheets[0].addRule('#background-container:after','height: 100%;');
+      document.styleSheets[0].addRule('#background-container:after','z-index: 1;');
+      document.styleSheets[0].addRule('#background-container:after','opacity: ' + opacityOfBG + ';');
+      document.styleSheets[0].addRule('#background-container:after','background-repeat: repeat;');
+      document.styleSheets[0].addRule('#background-container:after','background-position: 0 0;');
+      theBackgroundContainer.style.display = 'block';
   };
   reader.readAsDataURL(file);
 
   return false;
 };
+
+function outputUpdate(vol) {
+    document.querySelector('#volume').value = vol + '%';
+    opacityOfBG = vol / 100;
+}
 
 </script>
 
